@@ -14,3 +14,5 @@ Thumbs.db
 *.eot
 *.woff
 *.zip
+*.pyc
+*.sqlite3
