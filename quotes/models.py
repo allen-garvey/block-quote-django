@@ -25,3 +25,38 @@ class QuoteGenre(models.Model):
     name = models.CharField(max_length=200)
     def __str__(self):              # __unicode__ on Python 2
 		return self.name
+
+class Source(models.Model):
+    author = models.ForeignKey(Author)
+    title = models.CharField(max_length=200)
+    source_type = models.ForeignKey(SourceType)
+    release_date = models.DateField(blank=True, null=True)
+    parent_source = models.ForeignKey('self', blank=True, null=True)
+    url = models.CharField(max_length=200, blank=True, null=True)
+    def __str__(self):              # __unicode__ on Python 2
+        return self.title
+
+class Quote(models.Model):
+    quote_content = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+    genre = models.ForeignKey(QuoteGenre)
+    author = models.ForeignKey(Author, blank=True, null=True)
+    source = models.ForeignKey(Source)
+    def __str__(self):              # __unicode__ on Python 2
+        return self.quote_content
+
+class DailyQuote(models.Model):
+    quote = models.ForeignKey(Quote)
+    date_used = models.DateTimeField(auto_now_add=True)
+    def __str__(self):              # __unicode__ on Python 2
+        return self.quote.id + ' ' + self.date_used
+
+
+
+
+
+
+
+
+
+
