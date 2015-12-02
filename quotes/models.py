@@ -49,7 +49,7 @@ class DailyQuote(models.Model):
     quote = models.ForeignKey(Quote)
     date_used = models.DateTimeField(auto_now_add=True)
     def __str__(self):              # __unicode__ on Python 2
-        return self.quote.id + ' ' + self.date_used
+        return str(self.quote.id) + ' ' + self.date_used.strftime('%m/%d/%Y %H:%M')
 
 
 
