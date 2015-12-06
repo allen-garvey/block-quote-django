@@ -27,7 +27,7 @@ class QuoteGenre(models.Model):
         return self.name
 
 class Source(models.Model):
-    author = models.ForeignKey(Author)
+    author = models.ForeignKey(Author, blank=True, null=True)
     title = models.CharField(max_length=200)
     source_type = models.ForeignKey(SourceType)
     release_date = models.DateField(blank=True, null=True)
