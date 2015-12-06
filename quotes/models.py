@@ -19,12 +19,12 @@ class Author(models.Model):
 class SourceType(models.Model):
     name = models.CharField(max_length=200)
     def __str__(self):              # __unicode__ on Python 2
-		return self.name
+        return self.name
 
 class QuoteGenre(models.Model):
     name = models.CharField(max_length=200)
     def __str__(self):              # __unicode__ on Python 2
-		return self.name
+        return self.name
 
 class Source(models.Model):
     author = models.ForeignKey(Author)
