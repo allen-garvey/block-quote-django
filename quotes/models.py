@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils.encoding import force_bytes
 
 # Create your models here.
 class Author(models.Model):
