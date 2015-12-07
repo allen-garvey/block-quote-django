@@ -16,3 +16,4 @@ Thumbs.db
 *.zip
 *.pyc
 *.sqlite3
+static/*
