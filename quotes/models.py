@@ -80,16 +80,18 @@ class DailyQuote(models.Model):
     def to_dict(self):
         quote_author = self.quote.get_author()
         return {
-            'id' : self.id,
-            'datetime' : self.date_used,
-            'quote_body' : self.quote.quote_content,
-            'author' : {
-                            'first' : quote_author.author_first,
-                            'middle' : quote_author.author_middle,
-                            'last' : quote_author.author_last
-                        },
-            'source' : self.quote.source.title
-        }
+                'id' : self.id,
+                'datetime' : self.date_used,
+                'quote' : {
+                        'body' : self.quote.quote_content,
+                        'author' : {
+                                    'first' : quote_author.author_first,
+                                    'middle' : quote_author.author_middle,
+                                    'last' : quote_author.author_last
+                                },
+                        'source' : self.quote.source.title            
+                    }
+                }
     def __unicode__(self):              # __unicode__ on Python 2
         return str(self.quote.id) + ' ' + self.date_used.strftime('%m/%d/%Y %H:%M')
 
