@@ -14,7 +14,8 @@ def index(request):
 def daily_quote(request):
 	latest_daily_quote = DailyQuote.objects.all().order_by('-id')[:1]
 	if(latest_daily_quote[0].date_used.date() >= timezone.now().date()):
-		todays_quote = latest_daily_quote
+		todays_quote = latest_daily_quote[0].to_dict()
 	else:
 		todays_quote = {}
-	return JsonResponse({'data' : serializers.serialize("json", todays_quote)})
+	todays_quote = latest_daily_quote[0].to_dict()
+	return JsonResponse(todays_quote)
