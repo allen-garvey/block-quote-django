@@ -65,9 +65,31 @@ class Quote(models.Model):
     def __unicode__(self):              # __unicode__ on Python 2
         return self.quote_content
 
+    def get_author(self):
+        if self.author is not None:
+            return self.author
+        elif self.source.author is not None:
+            return self.source.author
+        else:
+            return self.source.parent_source.author
+
 class DailyQuote(models.Model):
     quote = models.ForeignKey(Quote)
     date_used = models.DateTimeField(auto_now_add=True)
+
+    def to_dict(self):
+        quote_author = self.quote.get_author()
+        return {
+            'id' : self.id,
+            'datetime' : self.date_used,
+            'quote_body' : self.quote.quote_content,
+            'author' : {
+                            'first' : quote_author.author_first,
+                            'middle' : quote_author.author_middle,
+                            'last' : quote_author.author_last
+                        },
+            'source' : self.quote.source.title
+        }
     def __unicode__(self):              # __unicode__ on Python 2
         return str(self.quote.id) + ' ' + self.date_used.strftime('%m/%d/%Y %H:%M')
 
