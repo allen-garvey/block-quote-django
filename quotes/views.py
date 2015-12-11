@@ -12,10 +12,9 @@ def index(request):
     return HttpResponse("Hello, world. You're at the quotes index.")
 
 def daily_quote(request):
-	latest_daily_quote = DailyQuote.objects.all().order_by('-id')[:1]
-	if(latest_daily_quote[0].date_used.date() >= timezone.now().date()):
-		todays_quote = latest_daily_quote[0].to_dict()
+	latest_daily_quote = DailyQuote.objects.all().order_by('-id')[:1][0]
+	if(latest_daily_quote.date_used.date() >= timezone.now().date()):
+		todays_quote = latest_daily_quote
 	else:
-		todays_quote = {}
-	todays_quote = latest_daily_quote[0].to_dict()
-	return JsonResponse(todays_quote)
+		todays_quote = DailyQuote.get_random(latest_daily_quote.pk)
+	return JsonResponse(todays_quote.to_dict())
