@@ -98,6 +98,7 @@ class DailyQuote(models.Model):
                 'id' : self.id,
                 'datetime' : self.date_used,
                 'quote' : {
+                        'id'   : self.quote.id,
                         'body' : self.quote.quote_content,
                         'author' : {
                                     'first' : quote_author.author_first,
