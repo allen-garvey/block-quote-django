@@ -103,7 +103,8 @@ class DailyQuote(models.Model):
                         'author' : {
                                     'first' : quote_author.author_first,
                                     'middle' : quote_author.author_middle,
-                                    'last' : quote_author.author_last
+                                    'last' : quote_author.author_last,
+                                    'full_name' : quote_author.full_name()
                                 },
                         'source' : self.quote.source.title            
                     }
