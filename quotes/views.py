@@ -16,5 +16,5 @@ def daily_quote(request):
 	if(latest_daily_quote.date_used.date() >= timezone.now().date()):
 		todays_quote = latest_daily_quote
 	else:
-		todays_quote = DailyQuote.get_random(latest_daily_quote.pk)
+		todays_quote = DailyQuote(quote=Quote.get_random(latest_daily_quote.quote.pk))
 	return JsonResponse(todays_quote.to_dict())

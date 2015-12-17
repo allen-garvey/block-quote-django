@@ -64,6 +64,20 @@ class Quote(models.Model):
     genre = models.ForeignKey(QuoteGenre)
     author = models.ForeignKey(Author, blank=True, null=True)
     source = models.ForeignKey(Source)
+    
+    @staticmethod
+    def get_random(latest_quote_id = None):
+        max_id = Quote.objects.aggregate(Max('id'))['id__max']
+        if latest_quote_id is None:
+            latest_quote_id = Quote.objects.all().order_by('-id')[:1][0].pk
+        random_quote = None
+        while random_quote is None or random_quote.pk == latest_quote_id:
+            try:
+                random_quote = Quote.objects.get(pk=randint(1, max_id))
+            except Quote.DoesNotExist:
+                pass
+        return random_quote
+
     def __unicode__(self):              # __unicode__ on Python 2
         return self.quote_content
 
@@ -78,19 +92,6 @@ class Quote(models.Model):
 class DailyQuote(models.Model):
     quote = models.ForeignKey(Quote)
     date_used = models.DateTimeField(auto_now_add=True)
-
-    @staticmethod
-    def get_random(latest_daily_quote_id = None):
-        max_id = DailyQuote.objects.aggregate(Max('id'))['id__max']
-        if latest_daily_quote_id is None:
-            latest_daily_quote_id = DailyQuote.objects.all().order_by('-id')[:1][0].pk
-        random_daily_quote = None
-        while random_daily_quote is None or random_daily_quote.pk == latest_daily_quote_id:
-            try:
-                random_daily_quote = DailyQuote.objects.get(pk=randint(1, max_id))
-            except DailyQuote.DoesNotExist:
-                pass
-        return random_daily_quote
 
     def to_dict(self):
         quote_author = self.quote.get_author()
