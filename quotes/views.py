@@ -17,4 +17,5 @@ def daily_quote(request):
 		todays_quote = latest_daily_quote
 	else:
 		todays_quote = DailyQuote(quote=Quote.get_random(latest_daily_quote.quote.pk))
+		todays_quote.save()
 	return JsonResponse(todays_quote.to_dict())
