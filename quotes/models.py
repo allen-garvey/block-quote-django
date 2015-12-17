@@ -66,10 +66,8 @@ class Quote(models.Model):
     source = models.ForeignKey(Source)
     
     @staticmethod
-    def get_random(latest_quote_id = None):
+    def get_random(latest_quote_id = -1):
         max_id = Quote.objects.aggregate(Max('id'))['id__max']
-        if latest_quote_id is None:
-            latest_quote_id = Quote.objects.all().order_by('-id')[:1][0].pk
         random_quote = None
         while random_quote is None or random_quote.pk == latest_quote_id:
             try:
