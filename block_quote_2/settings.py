@@ -49,6 +49,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'middleware.crossdomainxhr.XsSharing',
 )
 
 ROOT_URLCONF = 'block_quote_2.urls'
@@ -106,3 +107,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+#settings for cross domain xhr
+XS_SHARING_ALLOWED_ORIGINS = "http://127.0.0.1:88"
+XS_SHARING_ALLOWED_METHODS = ['GET']
