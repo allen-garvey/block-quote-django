@@ -13,7 +13,7 @@ def index(request):
 
 def daily_quote(request):
 	latest_daily_quote = DailyQuote.objects.all().order_by('-id')[:1][0]
-	if(latest_daily_quote.date_used.date() >= timezone.now().date()):
+	if(latest_daily_quote.date_used.date() >= timezone.localtime(timezone.now()).date()):
 		todays_quote = latest_daily_quote
 	else:
 		todays_quote = DailyQuote(quote=Quote.get_random(latest_daily_quote.quote.pk))
