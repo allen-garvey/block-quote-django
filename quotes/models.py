@@ -8,27 +8,33 @@ class Author(models.Model):
     author_first = models.CharField(max_length=200)
     author_middle = models.CharField(max_length=200, blank=True, null=True)
     
-    def full_name(self):
-        string_name = self.author_first
-        if self.author_middle is not None:
+    def middle_name(self):
+        if self.author_middle:
             middle_name = self.author_middle
             if len(middle_name) == 1:
                 middle_name = middle_name + '.'
-            string_name = string_name + " " + middle_name
-        if self.author_last is not None:
+            return middle_name
+        else:
+            return None
+
+    def full_name(self):
+        string_name = self.author_first
+        if self.author_middle:
+            string_name = string_name + " " + self.middle_name()
+        if self.author_last:
             string_name = string_name + " " + self.author_last
         return string_name
 
-    def __unicode__(self):
+    def list_name(self):
         string_name = self.author_first
-        if self.author_middle is not None:
-            middle_name = self.author_middle
-            if len(middle_name) == 1:
-                middle_name = middle_name + '.'
-            string_name = string_name + " " + middle_name
-        if self.author_last is not None:
+        if self.author_middle:
+            string_name = string_name + " " + self.middle_name()
+        if self.author_last:
             string_name =  self.author_last + ', ' + string_name
         return string_name
+
+    def __unicode__(self):
+        return self.list_name()
     class Meta:
         ordering = ['author_last', 'author_first', 'author_middle']
 
