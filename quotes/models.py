@@ -4,9 +4,9 @@ from random import randint
 
 # Create your models here.
 class Author(models.Model):
-    author_last = models.CharField(max_length=200, blank=True, null=True)
+    author_last = models.CharField(max_length=200, blank=True, null=True, default=None)
     author_first = models.CharField(max_length=200)
-    author_middle = models.CharField(max_length=200, blank=True, null=True)
+    author_middle = models.CharField(max_length=200, blank=True, null=True, default=None)
     
     def middle_name(self):
         if self.author_middle:
@@ -58,7 +58,7 @@ class Source(models.Model):
     source_type = models.ForeignKey(SourceType)
     release_date = models.DateField(blank=True, null=True)
     parent_source = models.ForeignKey('self', blank=True, null=True)
-    url = models.CharField(max_length=200, blank=True, null=True)
+    url = models.CharField(max_length=200, blank=True, null=True, default=None)
     def __unicode__(self):              # __unicode__ on Python 2
         return self.title
     class Meta:
