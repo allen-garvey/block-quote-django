@@ -16,4 +16,6 @@ Thumbs.db
 *.zip
 *.pyc
 *.sqlite3
-static/*
+static/admin/js/*
+static/admin/fonts/*
+static/admin/img/*
