@@ -68,7 +68,7 @@ class Source(models.Model):
             self.sort_title = re.sub(r'^\s*(a|an|the)?\s+', '', self.title, 0, re.IGNORECASE)
         super(Source, self).save(*args, **kwargs)
     class Meta:
-        ordering = ['title']
+        ordering = ['sort_title']
 
 class Quote(models.Model):
     quote_content = models.TextField()
