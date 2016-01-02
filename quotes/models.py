@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Max
 from random import randint
+import re
 
 # Create your models here.
 class Author(models.Model):
@@ -55,12 +56,17 @@ class QuoteGenre(models.Model):
 class Source(models.Model):
     author = models.ForeignKey(Author, blank=True, null=True)
     title = models.CharField(max_length=200)
+    sort_title = models.CharField(max_length=200, editable=False, null=True)
     source_type = models.ForeignKey(SourceType)
     release_date = models.DateField(blank=True, null=True)
     parent_source = models.ForeignKey('self', blank=True, null=True)
     url = models.CharField(max_length=200, blank=True, null=True, default=None)
     def __unicode__(self):              # __unicode__ on Python 2
         return self.title
+    def save(self, *args, **kwargs):
+        if self.sort_title == None:
+            self.sort_title = re.sub(r'^\s*(a|an|the)?\s+', '', self.title, 0, re.IGNORECASE)
+        super(Source, self).save(*args, **kwargs)
     class Meta:
         ordering = ['title']
 
