@@ -82,7 +82,7 @@ DATABASES = {
         'NAME': 'block_quote_2',
         'USER': 'Allen X',
         'PASSWORD': '',
-        'HOST': '127.0.0.1',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
