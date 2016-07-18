@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.sessions.models import Session
+import json
 
 # Create your views here.
 from django.core import serializers
@@ -11,7 +14,15 @@ from django.utils import timezone
 def index(request):
     return HttpResponse("Hello, world. You're at the quotes index.")
 
+@csrf_exempt
 def daily_quote(request):
+	try:
+		sessionid = request.POST['sessionid']
+		#will throw exception if a session is not found
+		session = Session.objects.get(session_key=sessionid)
+	except:
+		return JsonResponse({"error": "no session id"})
+
 	latest_daily_quote = DailyQuote.objects.all().order_by('-id')[:1][0]
 	if(latest_daily_quote.date_used.date() >= timezone.localtime(timezone.now()).date()):
 		todays_quote = latest_daily_quote
