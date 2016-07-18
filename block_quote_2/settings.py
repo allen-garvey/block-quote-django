@@ -108,6 +108,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+# Cookies
+SESSION_COOKIE_DOMAIN=".startpage.dev"
+SESSION_COOKIE_HTTPONLY = False
+
 #settings for cross domain xhr
 XS_SHARING_ALLOWED_ORIGINS = "http://127.0.0.1:88"
 XS_SHARING_ALLOWED_METHODS = ['GET']
